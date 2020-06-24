@@ -1,5 +1,9 @@
 from django.db import models
 
+class ValidManager(models.Manager):
+    def get_queryset(self):
+        return super(ValidManager, self).get_queryset().filter(available=True)
+
 class Category(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
@@ -25,7 +29,11 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
- 
+
+    objects = models.Manager()
+    
+    valid_objects = ValidManager()
+    
     class Meta:
         ordering = ('name',)
         verbose_name = 'product'
