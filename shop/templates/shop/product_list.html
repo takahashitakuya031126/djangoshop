@@ -16,28 +16,30 @@
 {% endblock %}
 {% block content %}
  
-<div>
-    <img src="{% static 'img/banner.jpg' %}" alt="Our Products Collection">
-</div>
-<br>
-<div>
-    <h1>Our Products Collection</h1>
-    <p>Finding the perfect cushion for your room can instantly add to the levels of comfort and sense of style throughout your home.</p>
-</div>
- 
-<div>
-    <div>
-        {% for product in products %}
-        <div>
-            <div>
-                <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}"></a>
-                <div>
-                    <h4>{{product.name}}</h4>
-                    <p>£{{product.price}}</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+<div class="row mx-auto my-2">
+    <div class="col-12">
+        <img src="{% static 'img/banner.jpg' %}" alt="Our Products Collection" class="w-100">
     </div>
 </div>
+<br>
+<div class="row">
+    <div class="col-12">
+        <h1>Our Products Collection</h1>
+        <p>Finding the perfect cushion for your room can instantly add to the levels of comfort and sense of style throughout your home.</p>
+    </div>
+</div>
+ 
+<div class="row">
+    {% for product in products %}
+    <div class="col-4">
+        <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}" width="300" height="200"></a>
+ 
+        <div>
+            <h4>{{product.name}}</h4>
+            <p>£{{product.price}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
