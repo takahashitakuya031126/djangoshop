@@ -11,7 +11,7 @@ def sample_category(name, slug, description):
         description = description
     )
 
-def sample_product(name, slug, description, category, price, stock, available):
+def sample_product(name, slug, description, category, price, stock, available, image="test.png"):
     return Product.objects.create(
         name = name,
         slug = slug,
@@ -19,7 +19,8 @@ def sample_product(name, slug, description, category, price, stock, available):
         category = category,
         price = price,
         stock = stock,
-        available = available
+        available = available,
+        image = image
     )
 
 class ViewTest(TestCase):
@@ -74,3 +75,27 @@ class ViewTest(TestCase):
         assert 'dog' in [product.name for product in response.context['products']]
         assert 'rabbit' in [product.name for product in response.context['products']]
         assert 'cat' not in [product.name for product in response.context['products']]
+
+
+class ProductDetailTest(TestCase):
+ 
+    def setUp(self):
+        self.category = sample_category(
+            name = 'Black Urban Cushion',
+            slug = 'black-urban-cushion',
+            description = 'This is a category for black urban cushion'
+        )
+ 
+        self.product  = sample_product(
+            name = 'dog',
+            slug = 'dog',
+            description = 'Dogs are intelligent animals!',
+            category = self.category,
+            price = 30.2,
+            stock = 30,
+            available = True
+        )
+ 
+    def test_correct_urls(self):
+        response = self.client.get(self.product.get_url())
+        assert response.status_code == 200

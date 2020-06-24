@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class ValidManager(models.Manager):
     def get_queryset(self):
@@ -41,3 +42,6 @@ class Product(models.Model):
  
     def __str__(self):
         return '{}'.format(self.name)
+    
+    def get_url(self):
+        return reverse('shop:product_detail', args=[self.slug])
